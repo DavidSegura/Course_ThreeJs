@@ -6,13 +6,16 @@ scene.background = new THREE.Color(0xCECECE);
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
-    35,
-    container.clientWidth/container.clientHeight,
-    0.1,
-    1000
+    35, // Fov (Field of view) 1 - 179
+    container.clientWidth/container.clientHeight, // Aspect Ratio
+    0.1, // Near
+    1000 // Far
 );
 
 camera.position.set(0, 0, 15);
+
+//camera.zoom = 2;
+//camera.updateProjectionMatrix();
 
 // Mesh
 const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
