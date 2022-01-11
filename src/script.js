@@ -5,11 +5,22 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xCECECE);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
+/*const camera = new THREE.PerspectiveCamera(
     35, // Fov (Field of view) 1 - 179
     container.clientWidth/container.clientHeight, // Aspect Ratio
     0.1, // Near
     1000 // Far
+);*/
+
+const div = 200;
+
+const camera = new THREE.OrthographicCamera(
+    container.clientWidth / div,
+    container.clientWidth / -div,
+    container.clientHeight / div,
+    container.clientHeight / -div,
+    .1,
+    1000
 );
 
 camera.position.set(0, 0, 15);
