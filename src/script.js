@@ -15,14 +15,13 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 15);
 
 // Mesh
-const geometry = new THREE.BoxGeometry(2, 2, 2);
+const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
 const material = new THREE.MeshBasicMaterial({
     color: 'teal'
 });
 const box_mesh = new THREE.Mesh(geometry, material);
 
 scene.add(box_mesh);
-
 
 // Render
 const renderer = new THREE.WebGLRenderer();
