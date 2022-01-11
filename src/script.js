@@ -22,13 +22,22 @@ const material = new THREE.MeshBasicMaterial({
 const box_mesh = new THREE.Mesh(geometry, material);
 
 scene.add(box_mesh);
+//scene.overrideMaterial = material;
+
+/*setTimeout(() => {
+    scene.remove(box_mesh);
+}, 2000);*/
 
 // Render
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    //alpha: true,
+    canvas: container
+});
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-container.appendChild(renderer.domElement);
+//container.appendChild(renderer.domElement);
 
 const updated = () => {
     box_mesh.rotateX(0.01);
