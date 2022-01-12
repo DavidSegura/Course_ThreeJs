@@ -12,13 +12,9 @@
         body {
             background-image: url("./src/assets/pattern.png");
         }
-        #container{
-            width: 100%;
-            height: 100vh;
-        }
         #game-container{
             width: 100%;
-            height: 100%;
+            height: 100vh;
         }
         canvas {
             display: block;
@@ -26,10 +22,8 @@
     </style>
 </head>
 <body>
-    <div id="container">
-        <canvas id="game-container"></canvas>
-    </div>
-    <script src="./node_modules/three/build/three.min.js"></script>
-    <script src="./src/script.js"></script>
+    <div id="game-container"></div>
+    <!-- <script src="./node_modules/three/build/three.min.js"></script> -->
+    <script src="./src/main.js" type="module"></script>
 </body>
 </html>
