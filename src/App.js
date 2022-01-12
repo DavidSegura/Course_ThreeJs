@@ -1,4 +1,5 @@
 import { PerspectiveCamera, Vector3, WebGLRenderer, sRGBEncoding } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Scene1 from './scenes/Scene001';
 
 export class App {
@@ -11,6 +12,9 @@ export class App {
 		this.camera = new PerspectiveCamera(35, this.container.clientWidth / this.container.clientHeight, 0.1, 10000);
 		this.camera.position.set(10, 10, 10);
 		this.camera.lookAt(new Vector3(0, 0, 0));
+
+        // ## Controls
+        const controls = new OrbitControls(this.camera, this.container);
 
 		// ## Renderer's config
 		this.renderer = new WebGLRenderer({
