@@ -27,6 +27,7 @@ export class App {
 
 		// ## Light's config
 		this.renderer.physicallyCorrectLights = true;
+        this.renderer.shadowMap.enabled = true;
 
 		this.container.appendChild(this.renderer.domElement);
 		this.onResize();
