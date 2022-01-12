@@ -14,9 +14,18 @@ const camera = new THREE.PerspectiveCamera(
 
 camera.position.set(0, 0, 15);
 
+// Textures 
+const textureLoader = new THREE.TextureLoader();
+textureLoader.setPath('./src/assets/textures/');
+
+const baseColor = textureLoader.load('base_color.jpg'); //UV
+const roughness = textureLoader.load('metallic_roughness.png');
+const normalMap = textureLoader.load('normal_map.png');
+
 // Material
 const material = new THREE.MeshBasicMaterial({
-    color: 'teal',
+    color: new THREE.Color('teal').convertSRGBToLinear(),
+    map: baseColor
     //transparent: true
     //wireframe: true
 });
@@ -24,14 +33,16 @@ const material = new THREE.MeshBasicMaterial({
 material.opacity = .3;
 
 const material_standar = new THREE.MeshStandardMaterial({
-    color: 'coral',
-    flatShading: true,
-    roughness: .2,
+    color: new THREE.Color('coral').convertSRGBToLinear(),
+    map: baseColor,
+    roughnessMap: roughness,
+    normalMap: normalMap
 });
 
-// Mesh
-const geometry = new THREE.CylinderBufferGeometry(1, 1, 3, 8);
+// Geometry
+const geometry = new THREE.BoxBufferGeometry(2, 2, 2);
 
+// Mesh
 const mesh = new THREE.Mesh(geometry, material);
 
 mesh.rotateZ(THREE.MathUtils.degToRad(90));
@@ -50,23 +61,12 @@ scene.add(mesh2);
 const ambient_light = new THREE.AmbientLight(0xffffff, 1);
 //scene.add(ambient_light);
 
-const gradient_light = new THREE.HemisphereLight(0xffffff, 0xff0000, 1);
+const gradient_light = new THREE.HemisphereLight(0xffffbb, 0x080820, .5);
 scene.add(gradient_light);
 
-const directional_light = new THREE.DirectionalLight(0xffffff, 3);
+const directional_light = new THREE.DirectionalLight(0xffffff, 1);
 directional_light.position.set(.8, 2, 4);
 scene.add(directional_light);
-
-// Helpers
-const helperAxes = new THREE.AxesHelper(10);
-
-scene.add(helperAxes);
-
-const directionalLightHelper = new THREE.DirectionalLightHelper(directional_light);
-scene.add(directionalLightHelper);
-
-const gradientlightHelper = new THREE.HemisphereLightHelper(gradient_light);
-scene.add(gradientlightHelper);
 
 // Render
 const renderer = new THREE.WebGLRenderer({
@@ -76,6 +76,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.physicallyCorrectLights = true;
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 
 const updated = () => {
