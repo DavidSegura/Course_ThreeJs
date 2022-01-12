@@ -1,28 +1,14 @@
-import * as THREE from '../../node_modules/three/build/three.module.js';
+import { Mesh, MeshStandardMaterial, Color, BoxBufferGeometry } from 'three';
 
-class Cube extends THREE.Mesh {
-    constructor() {
-        super();
+export class Cube extends Mesh {
+	constructor(size) {
+		super();
 
-        // Textures 
-        const textureLoader = new THREE.TextureLoader();
-        textureLoader.setPath('./src/assets/textures/');
-
-        const baseColor = textureLoader.load('base_color.jpg'); //UV
-        const roughness = textureLoader.load('metallic_roughness.png');
-        const normalMap = textureLoader.load('normal_map.png');
-
-        // Material
-        this.material = new THREE.MeshStandardMaterial({
-            color: new THREE.Color('coral').convertSRGBToLinear(),
-            map: baseColor,
-            roughnessMap: roughness,
-            normalMap: normalMap
-        });
-
-        // Geometry
-        this.geometry = new THREE.BoxBufferGeometry(2, 2, 2);
-    }
+		this.geometry = new BoxBufferGeometry(size, size, size);
+		this.material = new MeshStandardMaterial({
+			color: new Color('orangered').convertSRGBToLinear(),
+			flatShading: true,
+			roughness: .5
+		});
+	}
 }
-
-export default Cube;

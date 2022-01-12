@@ -1,9 +1,7 @@
-import App from "./App.js";
+import { App } from './App';
 
-const container = document.querySelector('#game-container');
+const app = new App(document.querySelector('#game-container'));
 
-const app = new App(container);
-
-window.addEventListener("resize", () => {
-    app.onResize();
+window.addEventListener('resize', () => {
+	app.onResize();
 });

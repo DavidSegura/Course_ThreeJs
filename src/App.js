@@ -1,48 +1,46 @@
-import * as THREE from '../node_modules/three/build/three.module.js';
-import Scene1 from './scenes/Scene001.js';
+import { PerspectiveCamera, Vector3, WebGLRenderer, sRGBEncoding } from 'three';
+import Scene1 from './scenes/Scene001';
 
-class App {
-    constructor(container) {
-        this.container = container;
+export class App {
+	constructor(container) {
+		this.container = container;
 
-        // Scene
-        this.scene = new Scene1();
+		this.scene = new Scene1();
 
-        // Camera
-        this.camera = new THREE.PerspectiveCamera(
-            35, // Fov (Field of view) 1 - 179
-            container.clientWidth/container.clientHeight, // Aspect Ratio
-            0.1, // Near
-            1000 // Far
-        );
+		// ## Camera's config
+		this.camera = new PerspectiveCamera(35, this.container.clientWidth / this.container.clientHeight, 0.1, 10000);
+		this.camera.position.set(10, 10, 10);
+		this.camera.lookAt(new Vector3(0, 0, 0));
 
-        this.camera.position.set(0, 0, 15);
+		// ## Renderer's config
+		this.renderer = new WebGLRenderer({
+			antialias: true,
+		})
+		this.renderer.setPixelRatio(window.devicePixelRatio);
 
-        // Render
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: true
-        });
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.physicallyCorrectLights = true;
-        this.renderer.outputEncoding = THREE.sRGBEncoding;
+		// sRGBEncoding
+		this.renderer.outputEncoding = sRGBEncoding;
 
-        this.container.appendChild(this.renderer.domElement);
+		// ## Light's config
+		this.renderer.physicallyCorrectLights = true;
 
-        this.render();
-    }
+		this.container.appendChild(this.renderer.domElement);
+		this.onResize();
+		this.render();
+	}
 
-    onResize() {
-        this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-        this.camera.aspect = this.container.clientWidth /this.container.clientHeight;
-        this.camera.updateProjectionMatrix();
-    }
+	onResize() {
+		this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+		this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+		this.camera.updateProjectionMatrix();
+	}
 
-    render() {
-        this.scene.update();
-        this.renderer.render(this.scene, this.camera);
-        this.renderer.setAnimationLoop(() => this.render());
-    }
+	render() {
+		this.renderer.render(this.scene, this.camera);
+
+		// Updates here
+		this.scene.update();
+
+		this.renderer.setAnimationLoop(() => this.render());
+	}
 }
-
-export default App;
